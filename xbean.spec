@@ -2,7 +2,7 @@ Name:           xbean
 Version:        3.7
 BuildArch:      noarch
 
-Release:        6
+Release:        7
 Summary:        Java plugin based web server
 
 Group:          Development/Java
@@ -84,7 +84,7 @@ mvn-jpp -e \
 
 %install
 # for every module we want to be built
-for sub in reflect naming classpath; do
+for sub in bundleutils finder reflect naming classpath; do
     # install jar
     install -Dpm 644 %{name}-${sub}/target/%{name}-${sub}-%{version}.jar \
             $RPM_BUILD_ROOT/%{_javadir}/xbean/%{name}-${sub}.jar;
@@ -103,10 +103,6 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-main.pom
 %add_to_maven_depmap org.apache.xbean %{name} %{version} JPP/%{name} main
 
-# UGLY hack to fix maven without 2 rebuilds
-install -dm 755 $RPM_BUILD_ROOT%{_datadir}/maven/lib/ext
-
-
 %pre javadoc
 # workaround for rpm bug, can be removed in F-17
 [ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
@@ -124,7 +120,6 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_mavenpomdir}/*.pom
 %{_mavendepmapfragdir}/%{name}
 %{_javadir}/%{name}
-%{_datadir}/maven/lib/ext
 
 %files javadoc
 %defattr(-,root,root,-)
