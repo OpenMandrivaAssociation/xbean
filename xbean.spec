@@ -2,7 +2,7 @@ Name:           xbean
 Version:        3.7
 BuildArch:      noarch
 
-Release:        7
+Release:        9
 Summary:        Java plugin based web server
 
 Group:          Development/Java
