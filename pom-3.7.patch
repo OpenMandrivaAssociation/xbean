@@ -1,0 +1,127 @@
+diff -Naur xbean-3.7/pom.xml xbean-3.7-work/pom.xml
+--- xbean-3.7/pom.xml	2010-05-14 10:21:23.000000000 -0400
++++ xbean-3.7-work/pom.xml	2011-05-28 07:55:22.461631687 -0400
+@@ -24,12 +24,6 @@
+ 
+     <modelVersion>4.0.0</modelVersion>
+ 
+-    <parent>
+-        <groupId>org.apache.geronimo.genesis</groupId>
+-        <artifactId>genesis-java5-flava</artifactId>
+-        <version>2.0</version>
+-    </parent>
+-
+     <groupId>org.apache.xbean</groupId>
+     <artifactId>xbean</artifactId>
+     <name>Apache XBean</name>
+@@ -265,33 +259,15 @@
+             </dependency>
+ 
+             <dependency>
+-                <groupId>org.springframework</groupId>
+-                <artifactId>spring-beans</artifactId>
+-                <version>2.5.6</version>
+-            </dependency>
+-
+-            <dependency>
+-                <groupId>org.springframework</groupId>
+-                <artifactId>spring-context</artifactId>
+-                <version>2.5.6</version>
+-            </dependency>
+-
+-            <dependency>
+-                <groupId>org.springframework</groupId>
+-                <artifactId>spring-web</artifactId>
+-                <version>2.5.6</version>
+-            </dependency>
+-
+-            <dependency>
+                 <groupId>com.thoughtworks.qdox</groupId>
+                 <artifactId>qdox</artifactId>
+                 <version>1.6.3</version>
+             </dependency>
+-            
++
+             <dependency>
+                 <groupId>org.slf4j</groupId>
+                 <artifactId>slf4j-api</artifactId>
+-                <version>1.5.11</version>                
++                <version>1.5.11</version>
+             </dependency>
+         </dependencies>
+     </dependencyManagement>
+@@ -327,13 +303,13 @@
+                     <artifactId>maven-bundle-plugin</artifactId>
+                     <version>2.0.0</version>
+                     <extensions>true</extensions>
+-                    <configuration>
+-                        <instructions>
+-                            <Bundle-DocURL>${project.url}</Bundle-DocURL>
+-                            <Export-Package>org.apache.xbean.*;version=${pom.version}</Export-Package>
+-                            <Private-Package />
+-                        </instructions>
+-                    </configuration>
++                     <configuration>
++-                        <instructions>
++-                            <Bundle-DocURL>${project.url}</Bundle-DocURL>
++-                            <Export-Package>org.apache.xbean.*;version=${pom.version}</Export-Package>
++-                            <Private-Package />
++-                        </instructions>
++-                    </configuration>
+                 </plugin>
+             </plugins>
+         </pluginManagement>
+@@ -343,22 +319,22 @@
+                 <groupId>org.apache.felix</groupId>
+                 <artifactId>maven-bundle-plugin</artifactId>
+             </plugin>
++             <plugin>
++                <artifactId>maven-compiler-plugin</artifactId>
++                <configuration>
++                    <source>1.5</source>
++                    <target>1.5</target>
++                </configuration>
++            </plugin>
+         </plugins>
+     </build>
+ 
+     <modules>
+-        <module>xbean-classloader</module>
+         <module>xbean-classpath</module>
+         <module>xbean-bundleutils</module>
+         <module>xbean-finder</module>
+         <module>xbean-naming</module>
+         <module>xbean-reflect</module>
+-        <module>xbean-blueprint</module>
+-        <module>xbean-spring</module>
+-        <module>xbean-telnet</module>
+-        <module>maven-xbean-plugin</module>
+-        <module>xbean-asm-shaded</module>
+-        <module>xbean-finder-shaded</module>
+     </modules>
+ 
+     <reporting>
+@@ -422,4 +398,4 @@
+         </plugins>
+     </reporting>
+ 
+-</project>
+\ No newline at end of file
++</project>
+diff -Naur xbean-3.7/xbean-reflect/pom.xml xbean-3.7-work/xbean-reflect/pom.xml
+--- xbean-3.7/xbean-reflect/pom.xml	2010-05-14 10:21:23.000000000 -0400
++++ xbean-3.7-work/xbean-reflect/pom.xml	2011-05-28 07:53:16.040651498 -0400
+@@ -47,13 +47,6 @@
+             <optional>true</optional>
+         </dependency>
+         <dependency>
+-            <groupId>org.apache.xbean</groupId>
+-            <artifactId>xbean-asm-shaded</artifactId>
+-            <version>3.7</version>
+-            <scope>provided</scope>
+-            <optional>true</optional>
+-        </dependency>
+-        <dependency>
+             <groupId>log4j</groupId>
+             <artifactId>log4j</artifactId>
+             <version>1.2.12</version>
