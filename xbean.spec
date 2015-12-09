@@ -7,16 +7,21 @@
 %endif
 
 Name:           xbean
-Version:        3.13
+Version:        3.17
 BuildArch:      noarch
 
-Release:        4.1%{?dist}
+Release:        2.1
 Summary:        Java plugin based web server
 
 License:        ASL 2.0
 URL:            http://geronimo.apache.org/xbean/
 
 Source0:        http://repo2.maven.org/maven2/org/apache/%{name}/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+# Fix dependency on xbean-asm4-shaded to original objectweb-asm
+Patch0:         %{name}-asm4-unshade.patch
+# Compatibility with Eclipse Luna (rhbz#1087461)
+Patch1:         %{name}-luna.patch
 
 BuildRequires:  java-devel
 BuildRequires:  apache-commons-beanutils
@@ -111,12 +116,15 @@ This package provides %{summary}.
 # build failing on this due to doxia-sitetools problems
 rm src/site/site.xml
 
+%patch0
+#patch1
+
 %pom_remove_parent
 %pom_remove_dep mx4j:mx4j
-%pom_remove_dep :xbean-asm-shaded xbean-reflect
+%pom_remove_dep :xbean-asm5-shaded xbean-reflect
 
 # These aren't needed for now
-%pom_disable_module xbean-asm-shaded
+%pom_disable_module xbean-asm5-shaded
 %pom_disable_module xbean-finder-shaded
 %pom_disable_module xbean-telnet
 
@@ -146,10 +154,12 @@ rm src/site/site.xml
   %pom_add_dep org.apache.felix:org.apache.felix.framework xbean-bundleutils
 %endif
 
+# maven-xbean-plugin invocation makes no sense as there are no namespaces
+%pom_remove_plugin :maven-xbean-plugin xbean-classloader
 
-# Fix dependency on xbean-asm-shaded to original objectweb-asm
-sed -i 's/org.apache.xbean.asm/org.objectweb.asm/' \
-    xbean-reflect/src/main/java/org/apache/xbean/recipe/XbeanAsmParameterNameLoader.java
+# As auditing tool RAT is useful for upstream only.
+%pom_remove_plugin :apache-rat-plugin
+
 
 # disable copy of internal aries-blueprint
 sed -i "s|<Private-Package>|<!--Private-Package>|" xbean-blueprint/pom.xml

@@ -1,0 +1,16 @@
+--- xbean-bundleutils/src/main/java/org/apache/xbean/osgi/bundle/util/DelegatingBundleContext.java~	2014-04-14 13:39:32.316688191 +0200
++++ xbean-bundleutils/src/main/java/org/apache/xbean/osgi/bundle/util/DelegatingBundleContext.java	2014-04-14 13:39:41.973106769 +0200
+@@ -153,5 +153,13 @@
+     public Bundle getBundle(String location) {
+         return bundleContext.getBundle(location);
+     }
++
++    public <S> org.osgi.framework.ServiceObjects<S> getServiceObjects(ServiceReference<S> reference) {
++        return bundleContext.getServiceObjects(reference);
++    }
++
++    public <S> ServiceRegistration<S> registerService(Class<S> clazz, org.osgi.framework.ServiceFactory<S> factory, Dictionary<String, ?> properties) {
++        return bundleContext.registerService(clazz, factory, properties);
++    }
+     
+ }

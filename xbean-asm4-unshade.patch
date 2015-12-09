@@ -1,0 +1,46 @@
+--- xbean-reflect/src/main/java/org/apache/xbean/recipe/XbeanAsmParameterNameLoader.java~	2014-04-14 13:00:42.025851035 +0200
++++ xbean-reflect/src/main/java/org/apache/xbean/recipe/XbeanAsmParameterNameLoader.java	2014-04-14 13:01:13.794418041 +0200
+@@ -17,12 +17,12 @@
+  */
+ package org.apache.xbean.recipe;
+ 
+-import org.apache.xbean.asm5.shade.commons.EmptyVisitor;
+-import org.apache.xbean.asm5.ClassReader;
+-import org.apache.xbean.asm5.Label;
+-import org.apache.xbean.asm5.MethodVisitor;
+-import org.apache.xbean.asm5.Opcodes;
+-import org.apache.xbean.asm5.Type;
++import org.objectweb.asm.ClassReader;
++import org.objectweb.asm.ClassVisitor;
++import org.objectweb.asm.Label;
++import org.objectweb.asm.MethodVisitor;
++import org.objectweb.asm.Opcodes;
++import org.objectweb.asm.Type;
+ 
+ import java.io.IOException;
+ import java.io.InputStream;
+@@ -211,7 +211,7 @@
+         }
+     }
+ 
+-    private static class AllParameterNamesDiscoveringVisitor extends EmptyVisitor {
++    private static class AllParameterNamesDiscoveringVisitor extends ClassVisitor {
+         private final Map<Constructor,List<String>> constructorParameters = new HashMap<Constructor,List<String>>();
+         private final Map<Method,List<String>> methodParameters = new HashMap<Method,List<String>>();
+         private final Map<String,Exception> exceptions = new HashMap<String,Exception>();
+@@ -220,6 +220,7 @@
+         private final Map<String,Constructor> constructorMap = new HashMap<String,Constructor>();
+ 
+         public AllParameterNamesDiscoveringVisitor(Class type, String methodName) {
++            super(Opcodes.ASM4);
+             this.methodName = methodName;
+ 
+             List<Method> methods = new ArrayList<Method>(Arrays.asList(type.getMethods()));
+@@ -232,6 +233,7 @@
+         }
+ 
+         public AllParameterNamesDiscoveringVisitor(Class type) {
++            super(Opcodes.ASM4);
+             this.methodName = "<init>";
+ 
+             List<Constructor> constructors = new ArrayList<Constructor>(Arrays.asList(type.getConstructors()));
