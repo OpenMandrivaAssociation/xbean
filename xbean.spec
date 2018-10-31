@@ -10,7 +10,7 @@ Name:           xbean
 Version:        3.17
 BuildArch:      noarch
 
-Release:        2.1
+Release:        2.2
 Summary:        Java plugin based web server
 
 License:        ASL 2.0
