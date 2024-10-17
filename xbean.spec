@@ -14,7 +14,7 @@ Release:        2.2
 Summary:        Java plugin based web server
 
 License:        ASL 2.0
-URL:            http://geronimo.apache.org/xbean/
+URL:            https://geronimo.apache.org/xbean/
 
 Source0:        http://repo2.maven.org/maven2/org/apache/%{name}/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
